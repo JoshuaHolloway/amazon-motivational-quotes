@@ -38,7 +38,18 @@ const QuoteList = (props) => {
   // --------------------------------------------
 
   const changeSortingHandler = () => {
-    history.push(`/quotes?sort=${isSortingAscending ? 'desc' : 'asc'}`);
+    // history.push(`/quotes?sort=${isSortingAscending ? 'desc' : 'asc'}`);
+    // history.push(
+    //   `${location.pathname}?sort=${isSortingAscending ? 'desc' : 'asc'}`
+    // );
+    // location.pathname: '/quotes'
+
+    // -An alternative way of describing the target destination
+    //  (works in links or any other router related stuff)
+    history.push({
+      pathname: location.pathname,
+      search: `?sort=${isSortingAscending ? 'desc' : 'asc'}`,
+    });
   };
 
   // --------------------------------------------

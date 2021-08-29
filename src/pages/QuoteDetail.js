@@ -1,4 +1,4 @@
-import { useParams, Route } from 'react-router-dom';
+import { useParams, Route, Link, useRouteMatch } from 'react-router-dom';
 
 // ==============================================
 
@@ -17,7 +17,10 @@ const DUMMY_QUOTES = [
 const QuoteDetail = () => {
   // --------------------------------------------
 
+  const match = useRouteMatch();
   const params = useParams();
+
+  console.log('match: ', match);
 
   // --------------------------------------------
 
@@ -33,7 +36,26 @@ const QuoteDetail = () => {
     <>
       {/* <p>{params.quoteId}</p> */}
       <HighlightedQuote text={quote.text} author={quote.author} />
-      <Route path={`/quotes/${params.quoteId}/comments`}>
+
+      {/* <Route path={`/quotes/${params.quoteId}`} exact> */}
+      <Route path={match.path} exact>
+        <div className='centered'>
+          {/* <Link className='btn--flat' to={`/quotes/${params.quoteId}/comments`}> */}
+          {/* match.url = url: "/quotes/q2" */}
+          <Link className='btn--flat' to={`${match.url}/comments`}>
+            Load Comments
+          </Link>
+        </div>
+      </Route>
+
+      {/* <Route path={`/quotes/${params.quoteId}/comments`}> */}
+      <Route path={`${match.path}/comments`}>
+        {/* match.path = path: "/quotes/:quoteId"
+        -This is a route-(handler) 
+         definition and therefore a hardcoded
+         route path with :quoteId is okay
+        -i.e., we are only handling a router here
+               with a dynamic value - not linking to the path */}
         <Comments />
       </Route>
     </>
